@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "onetimesecret"
+version = "0.0.1"
+description = ""
+authors = []
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+fastapi = "~0.103"
+uvicorn = {version="~0.23", extras=["standard"]}
+gunicorn = "~21.2"
+beanie = "~1.22"
+nanoid = "~2.0"
+argon2-cffi = "~21.3"
+cryptography = "~41.0"
+asgi-ratelimit = "~0.10"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+httpx = "*"
+trio = "*"
+pytest-cov = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

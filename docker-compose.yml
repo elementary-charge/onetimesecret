@@ -1,0 +1,43 @@
+version: '3.5'
+services:
+  mongo:
+    container_name: onetimesecret-mongo
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+  mongo-test:
+    container_name: onetimesecret-mongo-test
+    image: mongo
+    restart: always
+    ports:
+      - "27018:27017"
+  service:
+    container_name: onetimesecret
+    image: onetimesecret
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      MONGO_URI: mongodb://mongo:27017/
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+  tests:
+    container_name: onetimesecret-tests
+    image: onetimesecret-tests
+    depends_on:
+      - service
+      - mongo-test
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      MONGO_URI: mongodb://mongo-test:27017
+      RATE_LIMIT_PER_MINUTE: 10
+    volumes:
+      - .:/app
+    command: pytest tests -p no:warnings -vv

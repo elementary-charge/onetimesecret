@@ -1,0 +1,2 @@
+FROM onetimesecret
+RUN poetry update --no-cache --no-interaction --with dev
