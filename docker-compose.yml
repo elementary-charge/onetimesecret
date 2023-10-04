@@ -22,6 +22,8 @@ services:
       dockerfile: Dockerfile
     environment:
       MONGO_URI: mongodb://mongo:27017/
+      MONGO_DATABASE: ${MONGO_DATABASE:-default}
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-600}
     ports:
       - "8000:8000"
     volumes:
@@ -37,6 +39,7 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       MONGO_URI: mongodb://mongo-test:27017
+      MONGO_DATABASE: ${MONGO_DATABASE:-default}
       RATE_LIMIT_PER_MINUTE: 10
     volumes:
       - .:/app
